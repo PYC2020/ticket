@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
         //前者只是更新新的model中不为空的字段。
         //
         //后者则会将为空的字段在数据库中置为NULL。
+        System.out.println("user:"+user);
         int i = userMapper.updateByPrimaryKeySelective(user);
         return i;
     }

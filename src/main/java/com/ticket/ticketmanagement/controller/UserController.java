@@ -12,7 +12,11 @@ import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -142,7 +146,7 @@ public class UserController {
             @ApiResponse(code = 403, message = "用户密码错误")
     })
     @PostMapping(value = "/login")
-    public Response<Integer>login(@RequestParam("name") String name, @RequestParam("password") String password){
+    public Response<Integer>login(HttpSession session, @RequestParam("name") String name, @RequestParam("password") String password){
         Response<Integer>res=new Response<>();
         if(name.trim()==null||password.trim()==null||name.trim().length()==0||password.trim().length()==0){
             res.setData(null);
@@ -168,14 +172,46 @@ public class UserController {
             return res;
         }
         if(list1.size()==1){
+            String []arr=list1.get(0).toString().split(",");
+            Long id = Long.valueOf(arr[0].substring(8, arr[0].length()));
             User user1=new User();
-            user1.setId(user.getId());
+            user1.setId(id);
             user1.setStatus(1);
             int update = userService.update(user1);
+            session.setAttribute("User",list1);
+            session.setAttribute("id",id);
             res.setData(update);
             res.setMsg("登陆成功");
             res.setCode(200);
             return res;
+        }
+        return res;
+    }
+    @ResponseBody
+    @ApiOperation(value ="注销",notes = "User/登陆成功状态设置为0")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "注销成功"),
+            @ApiResponse(code = 500, message = "注销失败")
+    })
+    @PostMapping("/logout")
+    public Response logout(HttpSession session){
+        //@ModelAttribute("User")相当于将session中名为"User"的对象注入user对象中
+        //sessionStatus中的setComplete方法可以将session中的内容全部清空
+        Object id =  session.getAttribute("id");
+        Response<Integer> res = new Response();
+        if(id!=null) {
+            User user = new User();
+            user.setId(Long.valueOf(id.toString()));
+            user.setStatus(0);
+            int update = userService.update(user);
+            session.removeAttribute("User");
+            res.setCode(200);
+            res.setMsg("注销成功");
+            res.setData(update);
+        }else {
+            res.setCode(500);
+            res.setMsg("注销失败");
+            res.setData(null);
         }
         return res;
     }
