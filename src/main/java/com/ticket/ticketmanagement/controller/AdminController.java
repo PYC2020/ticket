@@ -27,7 +27,6 @@ public class AdminController {
     private static Logger logger = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     AdminService adminService;
-
     @ResponseBody
     @ApiOperation(value = "查询Admin", notes = "根据主键进行")
     @ApiResponses({
