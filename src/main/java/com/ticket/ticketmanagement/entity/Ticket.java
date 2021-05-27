@@ -16,7 +16,7 @@ public class Ticket {
   @ApiModelProperty("id")
   private Long id;
   @ApiModelProperty("关联用户id")
-  private long uid;
+  private Long uid;
   @ApiModelProperty("开始地址")
   private String startAddress;
   @ApiModelProperty("下车地址")
