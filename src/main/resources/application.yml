@@ -1,5 +1,7 @@
 server:
   port: 80
+  session:
+    time-out: 7200 #会话持久时间
 
 spring:
   datasource:

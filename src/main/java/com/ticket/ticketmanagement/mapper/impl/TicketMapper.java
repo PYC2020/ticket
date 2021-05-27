@@ -5,6 +5,6 @@ import com.ticket.ticketmanagement.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface TickerMapper  extends BaseMapper<Ticket> {
+public interface TicketMapper extends BaseMapper<Ticket> {
 
 }
