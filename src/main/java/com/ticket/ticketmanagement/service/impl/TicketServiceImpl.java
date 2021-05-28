@@ -26,8 +26,7 @@ public class TicketServiceImpl implements TicketService {
         Example example=new Example(Ticket.class);
         Example.Criteria criteria =example.createCriteria();
         criteria.andEqualTo("id",id);
-        List<Ticket> list=ticketMapper.selectByExample(example);
-        return list;
+        return ticketMapper.selectByExample(example);
     }
 
     @Override

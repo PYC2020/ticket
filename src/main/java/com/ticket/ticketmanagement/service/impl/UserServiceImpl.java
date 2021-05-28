@@ -23,14 +23,13 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("id", id);
-        List list = userMapper.selectByExample(example);
-        return list;
+        return userMapper.selectByExample(example);
     }
 
     @Override
     public int addUser(User user) {
         if (user.getRealName() != null && user.getPassword() != null && user.getIdentityCard() != null) {
-            //System.out.println(user);
+
             return userMapper.insert(user);
         }
         return 0;
@@ -43,8 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteById(int id) {
-        int i = userMapper.deleteByPrimaryKey(id);
-        return i;
+        return userMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -56,8 +54,7 @@ public class UserServiceImpl implements UserService {
         //
         //后者则会将为空的字段在数据库中置为NULL。
         System.out.println("user:"+user);
-        int i = userMapper.updateByPrimaryKeySelective(user);
-        return i;
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class UserServiceImpl implements UserService {
         }if(user.getStatus()!=null){
             criteria=criteria.andEqualTo("status",user.getStatus());
         }if(user.getPassword()!=null){
-            criteria=criteria.andEqualTo("password",user.getPassword());
+            criteria.andEqualTo("password",user.getPassword());
         }
         return userMapper.selectByExample(example);
     }

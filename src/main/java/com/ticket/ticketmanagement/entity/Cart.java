@@ -20,7 +20,7 @@ public class Cart {
   @ApiModelProperty("订单状态")
   private String status;
   @ApiModelProperty("订单价格")
-  private double price;
+  private Double price;
   @ApiModelProperty("下单时间")
   private java.sql.Timestamp time;
 
