@@ -26,7 +26,7 @@ public class Ticket {
   @ApiModelProperty("结束时间")
   private java.sql.Timestamp endTime;
   @ApiModelProperty("价格")
-  private double price;
+  private Double price;
   @ApiModelProperty("车票类型")
   private String type;
   @ApiModelProperty("车牌号")
